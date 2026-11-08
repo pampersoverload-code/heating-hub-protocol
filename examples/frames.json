@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "identities": "substituted; checksums recomputed",
+  "hub_id": "10203040",
+  "thermostat_id": "A1B2C3D4",
+  "assigned_slot": 3,
+  "note": "Not untouched captures. Calendar examples normalized. Unknown payload bytes preserve observed patterns. No private room names, serial numbers or occupancy timeline.",
+  "frames": [
+    {
+      "name": "00_01",
+      "kind": "00-01",
+      "length": 35,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0001001CA1B2C3D41020304003FFFFFFFF001A01020304050000FFFFFFFFFFFF72"
+    },
+    {
+      "name": "00_02",
+      "kind": "00-02",
+      "length": 25,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B00020012A1B2C3D41020304003FFFF1A01020304050172"
+    },
+    {
+      "name": "00_03",
+      "kind": "00-03",
+      "length": 18,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0003000B000000001020304000FF0056"
+    },
+    {
+      "name": "00_05",
+      "kind": "00-05",
+      "length": 16,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B00050009A1B2C3D4102030400344"
+    },
+    {
+      "name": "00_08",
+      "kind": "00-08",
+      "length": 14,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B00080007FFFFFFFF000F01C4"
+    },
+    {
+      "name": "01_01",
+      "kind": "01-01",
+      "length": 44,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0101002510203040A1B2C3D403003200AD0001000000FFFFFFFFFFFFB27B012C003200FF0001010101C6"
+    },
+    {
+      "name": "01_02",
+      "kind": "01-02",
+      "length": 38,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0102001FFFFFFFFFA1B2C3D40100A0011900010012010100030901000000000101010192"
+    },
+    {
+      "name": "01_05",
+      "kind": "01-05",
+      "length": 22,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0105000F10203040A1B2C3D403003200C1000F4D"
+    },
+    {
+      "name": "fe_08",
+      "kind": "FE-08",
+      "length": 14,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2BFE08000710203040000F0166"
+    },
+    {
+      "name": "program_day_01",
+      "kind": "01-07",
+      "length": 35,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0107001C10203040A1B2C3D4030000C8016800C8016800C8016800C80168010625"
+    },
+    {
+      "name": "program_ack_01",
+      "kind": "00-07",
+      "length": 17,
+      "classification": "derived_ack_example",
+      "hex": "7E2B0007000AA1B2C3D41020304003064D"
+    },
+    {
+      "name": "program_day_02",
+      "kind": "01-07",
+      "length": 35,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0107001C10203040A1B2C3D4030000C8016800C8016800C8016800C80168020525"
+    },
+    {
+      "name": "program_ack_02",
+      "kind": "00-07",
+      "length": 17,
+      "classification": "derived_ack_example",
+      "hex": "7E2B0007000AA1B2C3D41020304003054C"
+    },
+    {
+      "name": "program_day_04",
+      "kind": "01-07",
+      "length": 35,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0107001C10203040A1B2C3D4030000C8016800C8016800C8016800C80168040426"
+    },
+    {
+      "name": "program_ack_04",
+      "kind": "00-07",
+      "length": 17,
+      "classification": "derived_ack_example",
+      "hex": "7E2B0007000AA1B2C3D41020304003044B"
+    },
+    {
+      "name": "program_day_08",
+      "kind": "01-07",
+      "length": 35,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0107001C10203040A1B2C3D4030000C8016800C8016800C8016800C80168080329"
+    },
+    {
+      "name": "program_ack_08",
+      "kind": "00-07",
+      "length": 17,
+      "classification": "derived_ack_example",
+      "hex": "7E2B0007000AA1B2C3D41020304003034A"
+    },
+    {
+      "name": "program_day_10",
+      "kind": "01-07",
+      "length": 35,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0107001C10203040A1B2C3D4030000C8016800C8016800C8016800C80168100230"
+    },
+    {
+      "name": "program_ack_10",
+      "kind": "00-07",
+      "length": 17,
+      "classification": "derived_ack_example",
+      "hex": "7E2B0007000AA1B2C3D410203040030249"
+    },
+    {
+      "name": "program_day_20",
+      "kind": "01-07",
+      "length": 35,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0107001C10203040A1B2C3D4030000C8016800C8016800C8016800C8016820013F"
+    },
+    {
+      "name": "program_ack_20",
+      "kind": "00-07",
+      "length": 17,
+      "classification": "derived_ack_example",
+      "hex": "7E2B0007000AA1B2C3D410203040030148"
+    },
+    {
+      "name": "program_day_40",
+      "kind": "01-07",
+      "length": 35,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0107001C10203040A1B2C3D4030000C8016800C8016800C8016800C8016840005E"
+    },
+    {
+      "name": "program_ack_40",
+      "kind": "00-07",
+      "length": 17,
+      "classification": "derived_ack_example",
+      "hex": "7E2B0007000AA1B2C3D410203040030047"
+    },
+    {
+      "name": "program_varied",
+      "kind": "01-07",
+      "length": 35,
+      "classification": "sanitized_capture_shape",
+      "hex": "7E2B0107001C10203040A1B2C3D4030000C8016800A001E000C803C000A0052801066B"
+    },
+    {
+      "name": "setpoint_21_5",
+      "kind": "00-01",
+      "length": 35,
+      "classification": "derived_builder_example",
+      "hex": "7E2B0001001CA1B2C3D41020304003FF00D7FF001A01020304050000FFFFFFFFFFFF4B"
+    }
+  ]
+}
