@@ -1,0 +1,1124 @@
+{
+  "schema_version": 1,
+  "offset_base": 0,
+  "snapshot_date": "2026-11-08",
+  "note": "Observed command/length forms. Confidence labels apply per field, not uniformly to the whole protocol.",
+  "commands": [
+    {
+      "kind": "01-01",
+      "name": "Thermostat status",
+      "total_bytes": 44,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "Hub/network ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Observed association identity; not a printed serial."
+        },
+        {
+          "offset": 10,
+          "length": 4,
+          "name": "Thermostat ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Use transmitted order; no serial-number conversion known."
+        },
+        {
+          "offset": 14,
+          "length": 1,
+          "name": "Association slot",
+          "encoding": "unsigned",
+          "confidence": "Observed",
+          "notes": "1..6 in this system; not a universal hardware ID."
+        },
+        {
+          "offset": 15,
+          "length": 2,
+          "name": "Reported setpoint",
+          "encoding": "BE16 / 10 C",
+          "confidence": "Confirmed",
+          "notes": "Matched controlled target changes."
+        },
+        {
+          "offset": 17,
+          "length": 2,
+          "name": "Temperature measurement candidate",
+          "encoding": "BE16 / 10 C",
+          "confidence": "Candidate",
+          "notes": "Plausible room-temperature interpretation; no independent calibrated accuracy established."
+        },
+        {
+          "offset": 19,
+          "length": 1,
+          "name": "Unknown",
+          "encoding": "raw",
+          "confidence": "Unknown",
+          "notes": "Usually 00, isolated other values in old archive."
+        },
+        {
+          "offset": 20,
+          "length": 1,
+          "name": "Unknown status",
+          "encoding": "raw",
+          "confidence": "Unknown",
+          "notes": "00/01 variation observed."
+        },
+        {
+          "offset": 21,
+          "length": 1,
+          "name": "Valve demand/opening candidate",
+          "encoding": "unsigned raw",
+          "confidence": "Candidate",
+          "notes": "Observed range 0..100; could be controller demand rather than measured physical opening."
+        },
+        {
+          "offset": 22,
+          "length": 1,
+          "name": "Auto/Manual",
+          "encoding": "raw",
+          "confidence": "Confirmed for one valve",
+          "notes": "Controlled 01 Auto -> 00 Manual -> 01 Auto. A hand-set temperature can leave Auto=01."
+        },
+        {
+          "offset": 23,
+          "length": 1,
+          "name": "Unknown",
+          "encoding": "raw",
+          "confidence": "Unknown",
+          "notes": "00 in examined old set."
+        },
+        {
+          "offset": 24,
+          "length": 6,
+          "name": "Sentinel/reserved-looking region",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "Usually FF FF FF FF FF FF. Rare additive-valid outliers are not proof of a decoded function."
+        },
+        {
+          "offset": 30,
+          "length": 2,
+          "name": "Program signature/version/checksum candidate",
+          "encoding": "raw pair",
+          "confidence": "Candidate",
+          "notes": "Changed with program revisions; algorithm unknown, not a proven CRC16."
+        },
+        {
+          "offset": 32,
+          "length": 5,
+          "name": "Opaque tail A",
+          "encoding": "raw",
+          "confidence": "Unknown",
+          "notes": "Often 01 2C 00 32 00; preserve, do not invent semantics."
+        },
+        {
+          "offset": 37,
+          "length": 1,
+          "name": "Device-dependent tail byte",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "00 or FF depending on device in archived data."
+        },
+        {
+          "offset": 38,
+          "length": 3,
+          "name": "Opaque tail B",
+          "encoding": "raw",
+          "confidence": "Unknown",
+          "notes": "Common pattern 00 01 01."
+        },
+        {
+          "offset": 41,
+          "length": 2,
+          "name": "Device-dependent tail pair",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "00 00 or 01 01 in examined devices; meaning unknown."
+        },
+        {
+          "offset": 43,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..42 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E01",
+        "E09",
+        "E11"
+      ],
+      "notes": "44 bytes is the observed operating shape. Not 47 bytes of application payload. Reply with 00-01 even when its target need not change.",
+      "sample": "01_01"
+    },
+    {
+      "kind": "00-01",
+      "name": "Hub status/calendar/setpoint response",
+      "total_bytes": 35,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "Thermostat ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Destination association."
+        },
+        {
+          "offset": 10,
+          "length": 4,
+          "name": "Hub/network ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Source association."
+        },
+        {
+          "offset": 14,
+          "length": 1,
+          "name": "Association slot",
+          "encoding": "unsigned",
+          "confidence": "Observed",
+          "notes": "1..6 in this system; not a universal hardware ID."
+        },
+        {
+          "offset": 15,
+          "length": 1,
+          "name": "Sentinel/control",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "FF in the normal working template; rare other original values remain unresolved."
+        },
+        {
+          "offset": 16,
+          "length": 2,
+          "name": "Optional absolute target",
+          "encoding": "BE16 / 10 C or FFFF",
+          "confidence": "Confirmed",
+          "notes": "FFFF preserves setpoint. Example 00 D7 = 21.5 C; 00 C8 = 20 C."
+        },
+        {
+          "offset": 18,
+          "length": 1,
+          "name": "Sentinel/control",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "FF in working normal and setpoint-change template."
+        },
+        {
+          "offset": 19,
+          "length": 1,
+          "name": "Calendar prefix / unknown",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "00 in examined normal frames."
+        },
+        {
+          "offset": 20,
+          "length": 1,
+          "name": "Year minus 2000",
+          "encoding": "binary unsigned",
+          "confidence": "Confirmed",
+          "notes": "1A = decimal26, year2026. Not BCD."
+        },
+        {
+          "offset": 21,
+          "length": 1,
+          "name": "Month",
+          "encoding": "binary unsigned",
+          "confidence": "Confirmed",
+          "notes": "1..12."
+        },
+        {
+          "offset": 22,
+          "length": 1,
+          "name": "Day of month",
+          "encoding": "binary unsigned",
+          "confidence": "Confirmed",
+          "notes": "1..31 with valid calendar combination."
+        },
+        {
+          "offset": 23,
+          "length": 1,
+          "name": "Hour",
+          "encoding": "binary unsigned",
+          "confidence": "Confirmed",
+          "notes": "0..23; reference builder uses local wall time."
+        },
+        {
+          "offset": 24,
+          "length": 1,
+          "name": "Minute",
+          "encoding": "binary unsigned",
+          "confidence": "Confirmed",
+          "notes": "0..59."
+        },
+        {
+          "offset": 25,
+          "length": 1,
+          "name": "Second",
+          "encoding": "binary unsigned",
+          "confidence": "Confirmed",
+          "notes": "0..59."
+        },
+        {
+          "offset": 26,
+          "length": 8,
+          "name": "Opaque/sentinel tail",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "00 00 FF FF FF FF FF FF in working template. Do not assume the bytes are generally irrelevant."
+        },
+        {
+          "offset": 34,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..33 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E01",
+        "E05",
+        "E08"
+      ],
+      "notes": "Working GO_TX target: request sync +53ms. This table does not decode rare historical 31-byte variants or every unusual control-byte value.",
+      "sample": "00_01"
+    },
+    {
+      "kind": "01-05",
+      "name": "Thermostat presence/hourly/recontact",
+      "total_bytes": 22,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "Hub/network ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Observed association identity; not a printed serial."
+        },
+        {
+          "offset": 10,
+          "length": 4,
+          "name": "Thermostat ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Use transmitted order; no serial-number conversion known."
+        },
+        {
+          "offset": 14,
+          "length": 1,
+          "name": "Association slot",
+          "encoding": "unsigned",
+          "confidence": "Observed",
+          "notes": "1..6 in this system; not a universal hardware ID."
+        },
+        {
+          "offset": 15,
+          "length": 2,
+          "name": "Setpoint candidate",
+          "encoding": "BE16 / 10 C",
+          "confidence": "Candidate",
+          "notes": "Consistent with known values; less directly tested than 01-01 setpoint."
+        },
+        {
+          "offset": 17,
+          "length": 2,
+          "name": "Temperature candidate",
+          "encoding": "BE16 / 10 C",
+          "confidence": "Candidate",
+          "notes": "Plausible measurement field; retain raw value."
+        },
+        {
+          "offset": 19,
+          "length": 1,
+          "name": "Unknown status",
+          "encoding": "raw",
+          "confidence": "Unknown",
+          "notes": "Do not label as Auto/Manual without a separate controlled check."
+        },
+        {
+          "offset": 20,
+          "length": 1,
+          "name": "Hour/time candidate",
+          "encoding": "raw",
+          "confidence": "Candidate",
+          "notes": "Increases with the hour; UTC-hour relationship observed in one restart analysis."
+        },
+        {
+          "offset": 21,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..20 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E01",
+        "E06"
+      ],
+      "notes": "Appears during recovery AND ordinary hourly operation. Respond with matching 00-05, not with a setpoint embedded in an invented extension.",
+      "sample": "01_05"
+    },
+    {
+      "kind": "00-05",
+      "name": "Hub presence response",
+      "total_bytes": 16,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "Thermostat ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Destination association."
+        },
+        {
+          "offset": 10,
+          "length": 4,
+          "name": "Hub/network ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Source association."
+        },
+        {
+          "offset": 14,
+          "length": 1,
+          "name": "Association slot",
+          "encoding": "unsigned",
+          "confidence": "Observed",
+          "notes": "1..6 in this system; not a universal hardware ID."
+        },
+        {
+          "offset": 15,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..14 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E01",
+        "E06"
+      ],
+      "notes": "No extra temperature or full calendar payload. Working GO_TX target: request sync +27.2ms. A 01-01/00-01 exchange commonly follows.",
+      "sample": "00_05"
+    },
+    {
+      "kind": "00-03",
+      "name": "Hub beacon-like frame",
+      "total_bytes": 18,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "Unaddressed identity field",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "00000000; broadcast interpretation plausible."
+        },
+        {
+          "offset": 10,
+          "length": 4,
+          "name": "Hub/network ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Matches other hub messages."
+        },
+        {
+          "offset": 14,
+          "length": 1,
+          "name": "Slot/control",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "00."
+        },
+        {
+          "offset": 15,
+          "length": 2,
+          "name": "Opaque control",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "FF 00, no changing calendar identified."
+        },
+        {
+          "offset": 17,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..16 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E01",
+        "E07"
+      ],
+      "notes": "Original periodic cadence approximately60s plus startup bursts. Exact synchronization purpose and isolated cold-start necessity remain unproven.",
+      "sample": "00_03"
+    },
+    {
+      "kind": "01-07",
+      "name": "Thermostat weekly-program row",
+      "total_bytes": 35,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "Hub/network ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Observed association identity; not a printed serial."
+        },
+        {
+          "offset": 10,
+          "length": 4,
+          "name": "Thermostat ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Use transmitted order; no serial-number conversion known."
+        },
+        {
+          "offset": 14,
+          "length": 1,
+          "name": "Association slot",
+          "encoding": "unsigned",
+          "confidence": "Observed",
+          "notes": "1..6 in this system; not a universal hardware ID."
+        },
+        {
+          "offset": 15,
+          "length": 1,
+          "name": "Reserved-looking byte",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "00 in decoded rows; meaning unknown."
+        },
+        {
+          "offset": 16,
+          "length": 2,
+          "name": "Point 1 temperature",
+          "encoding": "BE16 / 10 C",
+          "confidence": "Confirmed",
+          "notes": "Observed 5..30 C in 0.5 C steps."
+        },
+        {
+          "offset": 18,
+          "length": 2,
+          "name": "Point 1 start minute",
+          "encoding": "BE16 minutes since midnight",
+          "confidence": "Confirmed",
+          "notes": "0..1439; 0168 = 360 = 06:00."
+        },
+        {
+          "offset": 20,
+          "length": 2,
+          "name": "Point 2 temperature",
+          "encoding": "BE16 / 10 C",
+          "confidence": "Confirmed",
+          "notes": "Observed 5..30 C in 0.5 C steps."
+        },
+        {
+          "offset": 22,
+          "length": 2,
+          "name": "Point 2 start minute",
+          "encoding": "BE16 minutes since midnight",
+          "confidence": "Confirmed",
+          "notes": "0..1439; 0168 = 360 = 06:00."
+        },
+        {
+          "offset": 24,
+          "length": 2,
+          "name": "Point 3 temperature",
+          "encoding": "BE16 / 10 C",
+          "confidence": "Confirmed",
+          "notes": "Observed 5..30 C in 0.5 C steps."
+        },
+        {
+          "offset": 26,
+          "length": 2,
+          "name": "Point 3 start minute",
+          "encoding": "BE16 minutes since midnight",
+          "confidence": "Confirmed",
+          "notes": "0..1439; 0168 = 360 = 06:00."
+        },
+        {
+          "offset": 28,
+          "length": 2,
+          "name": "Point 4 temperature",
+          "encoding": "BE16 / 10 C",
+          "confidence": "Confirmed",
+          "notes": "Observed 5..30 C in 0.5 C steps."
+        },
+        {
+          "offset": 30,
+          "length": 2,
+          "name": "Point 4 start minute",
+          "encoding": "BE16 minutes since midnight",
+          "confidence": "Confirmed",
+          "notes": "0..1439; 0168 = 360 = 06:00."
+        },
+        {
+          "offset": 32,
+          "length": 1,
+          "name": "Day mask",
+          "encoding": "one-hot raw",
+          "confidence": "Confirmed as seven-row index",
+          "notes": "01,02,04,08,10,20,40. RF mask-to-weekday names not independently confirmed."
+        },
+        {
+          "offset": 33,
+          "length": 1,
+          "name": "Remaining row count",
+          "encoding": "unsigned",
+          "confidence": "Confirmed",
+          "notes": "6,5,4,3,2,1,0 paired with ascending day masks."
+        },
+        {
+          "offset": 34,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..33 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E09",
+        "E10"
+      ],
+      "notes": "Seven rows form the observed week. ACK every valid approved row with 00-07. Duplicate times are possible; no known active program-fetch command. UI option1-7 means entire week.",
+      "sample": "program_day_01"
+    },
+    {
+      "kind": "00-07",
+      "name": "Hub program-row acknowledgement",
+      "total_bytes": 17,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "Thermostat ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Destination association."
+        },
+        {
+          "offset": 10,
+          "length": 4,
+          "name": "Hub/network ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Source association."
+        },
+        {
+          "offset": 14,
+          "length": 1,
+          "name": "Association slot",
+          "encoding": "unsigned",
+          "confidence": "Observed",
+          "notes": "1..6 in this system; not a universal hardware ID."
+        },
+        {
+          "offset": 15,
+          "length": 1,
+          "name": "Remaining row count echo",
+          "encoding": "unsigned",
+          "confidence": "Confirmed",
+          "notes": "Copy request offset33 exactly, not day mask or remaining+1."
+        },
+        {
+          "offset": 16,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..15 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E09"
+      ],
+      "notes": "Working GO_TX target: request sync+35.1ms, nominal RF sync gap about36.7ms. Carries no schedule points.",
+      "sample": "program_ack_01"
+    },
+    {
+      "kind": "01-02",
+      "name": "Thermostat association request candidate",
+      "total_bytes": 38,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "Unbound/destination field",
+          "encoding": "opaque bytes",
+          "confidence": "Observed",
+          "notes": "FF FF FF FF before association in examined requests."
+        },
+        {
+          "offset": 10,
+          "length": 4,
+          "name": "Thermostat ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Matches subsequent association and status."
+        },
+        {
+          "offset": 14,
+          "length": 1,
+          "name": "Pre-association slot/phase candidate",
+          "encoding": "raw",
+          "confidence": "Unknown",
+          "notes": "01 in first example; do not substitute eventual assigned slot when interpreting the original."
+        },
+        {
+          "offset": 15,
+          "length": 22,
+          "name": "Association payload",
+          "encoding": "raw",
+          "confidence": "Unknown",
+          "notes": "Some values resemble temperatures/status but are not independently decoded."
+        },
+        {
+          "offset": 37,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..36 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E01"
+      ],
+      "notes": "54 requests in the early archive, followed by one00-02. No complete vendor-free pairing builder supplied.",
+      "sample": "01_02"
+    },
+    {
+      "kind": "00-02",
+      "name": "Hub association response candidate",
+      "total_bytes": 25,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "Thermostat ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Destination association."
+        },
+        {
+          "offset": 10,
+          "length": 4,
+          "name": "Hub/network ID",
+          "encoding": "opaque bytes",
+          "confidence": "Confirmed",
+          "notes": "Source association."
+        },
+        {
+          "offset": 14,
+          "length": 1,
+          "name": "Association slot",
+          "encoding": "unsigned",
+          "confidence": "Observed",
+          "notes": "1..6 in this system; not a universal hardware ID."
+        },
+        {
+          "offset": 15,
+          "length": 2,
+          "name": "Sentinel/control",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "FF FF in the sole old example."
+        },
+        {
+          "offset": 17,
+          "length": 6,
+          "name": "Calendar candidate",
+          "encoding": "binary YY MM DD hh mm ss",
+          "confidence": "Candidate",
+          "notes": "Year minus2000; original values matched capture time strongly, but only one reply exists in the analysed archive."
+        },
+        {
+          "offset": 23,
+          "length": 1,
+          "name": "Unknown control",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "01 in old example."
+        },
+        {
+          "offset": 24,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..23 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E01"
+      ],
+      "notes": "Contains assigned slot; normal status followed about3s later. This is partial association evidence, not a tested pairing implementation.",
+      "sample": "00_02"
+    },
+    {
+      "kind": "00-08",
+      "name": "Host-to-radio control candidate",
+      "total_bytes": 14,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "General identity/control",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "FF FF FF FF in all53 old host outputs."
+        },
+        {
+          "offset": 10,
+          "length": 2,
+          "name": "Unknown parameters",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "00 0F."
+        },
+        {
+          "offset": 12,
+          "length": 1,
+          "name": "Unknown control",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "01."
+        },
+        {
+          "offset": 13,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..12 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E01"
+      ],
+      "notes": "Observed on UART, paired with FE-08. RF transmission has not been demonstrated; exclude from ordinary valve reply policy.",
+      "sample": "00_08"
+    },
+    {
+      "kind": "FE-08",
+      "name": "Radio-to-host control candidate",
+      "total_bytes": 14,
+      "fields": [
+        {
+          "offset": 0,
+          "length": 2,
+          "name": "Application marker",
+          "encoding": "hex",
+          "confidence": "Confirmed",
+          "notes": "7E 2B, not the RF sync word."
+        },
+        {
+          "offset": 2,
+          "length": 2,
+          "name": "Kind",
+          "encoding": "two raw bytes",
+          "confidence": "Confirmed",
+          "notes": "Classify together with total frame length."
+        },
+        {
+          "offset": 4,
+          "length": 2,
+          "name": "Payload length",
+          "encoding": "BE16",
+          "confidence": "Confirmed",
+          "notes": "Total application length = this value + 7."
+        },
+        {
+          "offset": 6,
+          "length": 4,
+          "name": "Hub identity",
+          "encoding": "opaque bytes",
+          "confidence": "Observed",
+          "notes": "Matches hub ID in old example."
+        },
+        {
+          "offset": 10,
+          "length": 2,
+          "name": "Unknown parameters",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "00 0F."
+        },
+        {
+          "offset": 12,
+          "length": 1,
+          "name": "Unknown control",
+          "encoding": "raw",
+          "confidence": "Observed",
+          "notes": "01."
+        },
+        {
+          "offset": 13,
+          "length": 1,
+          "name": "Additive checksum",
+          "encoding": "sum8",
+          "confidence": "Confirmed",
+          "notes": "Sum offsets 0..12 modulo 256."
+        }
+      ],
+      "evidence": [
+        "E01"
+      ],
+      "notes": "Paired UART-side response to00-08; not established as a thermostat RF message.",
+      "sample": "fe_08"
+    }
+  ]
+}
